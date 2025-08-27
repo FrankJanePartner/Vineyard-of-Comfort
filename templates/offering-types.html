@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Giving Dashboard</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ <link rel="stylesheet" href="core/css/offering-types.css">
+</head>
+<body>
+
+<!-- Overlay for mobile sidebar -->
+<div class="overlay" id="overlay"></div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div>
+        <div class="logo">
+            <img src="https://img.icons8.com/ios-filled/50/7c3aed/home.png"/>
+            <div>
+                <div class="logo-text">Giving Dashboard</div>
+                <small style="color: gray;">Faithful Stewardship</small>
+            </div>
+        </div>
+        <div class="nav-section">
+          <div class="nav-title">NAVIGATION</div>
+            <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+            <a href="offering-types.html" class="nav-link active"><i class="fa-regular fa-file-lines"></i> Financial Report</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-title">SPIRITUAL ENCOURAGEMENT</div>
+            <div class="verse-box">
+                <strong>Today's Verse</strong><br>
+                "Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver." - 2 Cor 9:7
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="profile">
+            <div class="profile-icon">A</div>
+            <div>
+                <div class="name">Ayomide Afolabi</div>
+                <small style="color: gray;">Member</small>
+            </div>
+        </div>
+        <div class="signout">Sign Out</div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+    <div class="header">
+
+        <div class="nav-header">
+          <i class="fas fa-bars hamburger" id="hamburger"></i>
+          <div>Church Giving</div>
+        </div>
+    
+        <div>
+            <div class="header-title">Vineyard Of Comfort Giving Dashboard</div>
+            <small style="color: gray;">"God loves a cheerful giver" - Track our faithful stewardship</small>
+        </div>
+
+        <div class="filter-buttons">
+            <input type="date" id="datePicker" class="date-picker">
+        </div>
+
+    </div>
+
+    <!-- Cards -->
+    <div class="cards" id="cards-container"></div>
+
+    <!-- Charts -->
+    <div class="charts">
+        <div class="chart-box">
+            <strong>Giving Trends</strong>
+            <canvas id="givingTrend"></canvas>
+        </div>
+        <div class="chart-box">
+            <strong>Giving by Type</strong>
+            <canvas id="givingType"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="core/js/offering-types.js"></script>
+</body>
+</html>    

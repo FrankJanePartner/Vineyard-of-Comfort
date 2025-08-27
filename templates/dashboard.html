@@ -1,0 +1,213 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Giving Dashboard</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ <link rel="stylesheet" href="{% static 'core/css/dashboard.css' %}">
+</head>
+<body>
+
+<!-- Overlay for mobile sidebar -->
+<div class="overlay" id="overlay"></div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div>
+        <div class="logo">
+            <img src="https://img.icons8.com/ios-filled/50/7c3aed/home.png"/>
+            <div>
+                <div class="logo-text">Giving Dashboard</div>
+                <small style="color: gray;">Faithful Stewardship</small>
+            </div>
+        </div>
+        <div class="nav-section">
+          <div class="nav-title">NAVIGATION</div>
+            <a href="/" class="nav-link active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+            <a href="/offering/" class="nav-link"><i class="fa-regular fa-file-lines"></i> Financial Report</a>
+        </div>
+        <div class="nav-section">
+            <div class="nav-title">SPIRITUAL ENCOURAGEMENT</div>
+            <div class="verse-box">
+                <strong>Today's Verse</strong><br>
+                "Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver." - 2 Cor 9:7
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="profile">
+            <div class="profile-icon">{{ user.username|slice:":1" }}</div>
+            <div>
+                <div class="name">{{ user.username }}</div>
+                {% if user.is_superuser == True %}
+                  <small style="color: gray;">Admin</small>
+                {% else %}
+                  <small style="color: gray;">Staff</small>
+                {% endif %}
+            </div>
+        </div>
+        <a href="/accounts/logout/" style="text-decoration: none; width:fit-content;"><div class="signout">Sign Out</div></a>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+    <div class="header">
+
+        <div class="nav-header">
+          <i class="fas fa-bars hamburger" id="hamburger"></i>
+          <div>Church Giving</div>
+        </div>
+    
+        <div>
+            <div class="header-title">Vineyard Of Comfort Giving Dashboard</div>
+            <small style="color: gray;">"God loves a cheerful giver" - Track our faithful stewardship</small>
+        </div>
+
+        <div class="filter-buttons">
+            <input type="date" id="datePicker" class="date-picker">
+        </div>
+
+    </div>
+
+    <!-- Cards -->
+    <div class="cards" id="cards-container"></div>
+
+    <!-- Charts -->
+    <div class="charts">
+        <div class="chart-box">
+            <strong>Giving Trends</strong>
+            <canvas id="givingTrend"></canvas>
+        </div>
+        <div class="chart-box">
+            <strong>Giving by Type</strong>
+            <canvas id="givingType"></canvas>
+        </div>
+    </div>
+
+    <!-- Recent -->
+      <section class="card activity-card" aria-labelledby="recent-activity-heading">
+      <h2 id="recent-activity-heading">Recent Activity</h2>
+      <ul class="activity-list" role="list">
+        <!-- Item 1: Pledge -->
+        <li class="item pledge">
+          <div class="icon-wrap" aria-hidden="true">
+            <!-- sparkles -->
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2l1.4 3.7L17 7l-3.6 1.3L12 12l-1.4-3.7L7 7l3.6-1.3L12 2Zm7 9l.9 2.4L22 14l-2.1.6L19 17l-.9-2.4L16 14l2.1-.6L19 11ZM6 15l.9 2.4L9 18l-2.1.6L6 21l-.9-2.4L3 18l2.1-.6L6 15Z"/>
+            </svg>
+          </div>
+          <div class="who">
+            <div class="name">Robert Miller</div>
+            <div class="tag">Pledge</div>
+          </div>
+          <div class="meta">
+            <div class="amount">₦200</div>
+            <div class="date">Dec 25, 2024</div>
+          </div>
+        </li>
+
+        <!-- Item 2: Special Offering -->
+        <li class="item offering">
+          <div class="icon-wrap" aria-hidden="true">
+            <!-- gift -->
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 7h-3.2A3.8 3.8 0 0 0 12 3.5 3.8 3.8 0 0 0 7.2 7H4a1 1 0 0 0-1 1v3h9V7h2v4h9V8a1 1 0 0 0-1-1Zm-9-1.5c0-.7.5-1.2 1-1.2s1 .5 1 1.2V7h-2V5.5ZM3 12v7a2 2 0 0 0 2 2h6v-9H3Zm10 0v9h6a2 2 0 0 0 2-2v-7h-8Z"/>
+            </svg>
+          </div>
+          <div class="who">
+            <div class="name">Lisa Anderson</div>
+            <div class="tag">Special Offering</div>
+          </div>
+          <div class="meta">
+            <div class="amount">₦200</div>
+            <div class="date">Dec 22, 2024</div>
+          </div>
+        </li>
+
+        <!-- Item 3: Missions -->
+        <li class="item missions">
+          <div class="icon-wrap" aria-hidden="true">
+            <!-- compass/target -->
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 2a8 8 0 1 1-8 8 8 8 0 0 1 8-8Zm-4.5 12.5L14 14l2.5-6.5L10 10l-2.5 6.5ZM12 13a1 1 0 1 1 1-1 1 1 0 0 1-1 1Z"/>
+            </svg>
+          </div>
+          <div class="who">
+            <div class="name">David Wilson</div>
+            <div class="tag">Missions</div>
+          </div>
+          <div class="meta">
+            <div class="amount">₦200</div>
+            <div class="date">Dec 20, 2024</div>
+          </div>
+        </li>
+
+        <!-- Item 4: Tithe -->
+        <li class="item tithe">
+          <div class="icon-wrap" aria-hidden="true">
+            <!-- heart outline -->
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 20s-7-4.6-9.1-8.1A4.9 4.9 0 0 1 7.8 4.6c1.2 0 2.4.5 3.2 1.4.8-.9 2-1.4 3.2-1.4a4.9 4.9 0 0 1 4.9 4.9C17.6 15.4 12 20 12 20Z"/>
+            </svg>
+          </div>
+          <div class="who">
+            <div class="name">Emily Davis</div>
+            <div class="tag">Tithe</div>
+          </div>
+          <div class="meta">
+            <div class="amount">₦200</div>
+            <div class="date">Dec 15, 2024</div>
+          </div>
+        </li>
+
+        <!-- Item 5: Building Fund -->
+        <li class="item building">
+          <div class="icon-wrap" aria-hidden="true">
+            <!-- building -->
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 21h18v-2H3v2Zm2-4h2v-2H5v2Zm0-4h2v-2H5v2Zm0-4h2V7H5v2Zm4 8h2v-2H9v2Zm0-4h2v-2H9v2Zm0-4h2V7H9v2Zm4 8h2v-2h-2v2Zm0-4h2v-2h-2v2Zm0-4h2V7h-2v2Zm4 8h2v-2h-2v2Zm0-4h2v-2h-2v2Zm0-4h2V7h-2v2ZM4 5h16V3H4v2Z"/>
+            </svg>
+          </div>
+          <div class="who">
+            <div class="name">Michael Brown</div>
+            <div class="tag">Building Fund</div>
+          </div>
+          <div class="meta">
+            <div class="amount">₦1,000</div>
+            <div class="date">Dec 10, 2024</div>
+          </div>
+        </li>
+
+        <!-- Item 6: Building Fund -->
+        <li class="item building">
+          <div class="icon-wrap" aria-hidden="true">
+            <!-- building -->
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 21h18v-2H3v2Zm2-4h2v-2H5v2Zm0-4h2v-2H5v2Zm0-4h2V7H5v2Zm4 8h2v-2H9v2Zm0-4h2v-2H9v2Zm0-4h2V7H9v2Zm4 8h2v-2h-2v2Zm0-4h2v-2h-2v2Zm0-4h2V7h-2v2Zm4 8h2v-2h-2v2Zm0-4h2v-2h-2v2Zm0-4h2V7h-2v2ZM4 5h16V3H4v2Z"/>
+            </svg>
+          </div>
+          <div class="who">
+            <div class="name">Ayomide Afolabi</div>
+            <div class="tag">Building Fund</div>
+          </div>
+          <div class="meta">
+            <div class="amount">₦270</div>
+            <div class="date">Dec 10, 2024</div>
+          </div>
+        </li>
+
+        
+      </ul>
+    </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'core/js/dashboard.js' %}"></script>
+</body>
+</html>

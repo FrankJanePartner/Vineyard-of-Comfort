@@ -1,0 +1,211 @@
+  /* --- Your styles remain unchanged --- */
+    * 
+    { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    body { display: flex; background-color: #f5f7ff; }
+    .sidebar { width: 260px; background: #fff; border-right: 1px solid #e5e7eb; position: fixed; top: 0; left: 0; height: 100%; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; transition: left 0.3s; z-index: 10; }
+    .logo { display: flex; align-items: center; gap: 10px; }
+    .logo img { width: 36px; height: 36px; }
+    .logo-text { font-size: 18px; font-weight: bold; }
+    .nav-section { margin-top: 40px; }
+    .nav-title { font-size: 12px; color: gray; margin-bottom: 10px; }
+    .nav-link { display: flex; align-items: center; gap: 8px; font-weight: 600; padding: 10px; border-radius: 8px; text-decoration: none; color: #333; transition: background 0.3s; }
+    .nav-link.active {
+      background-color: #e0e7ff;
+    }
+    /* .nav-link:hover { background: linear-gradient(90deg, #c7d2fe, #e0e7ff);} */
+    .verse-box { background: #fffaf0; border: 1px solid #fde68a; padding: 10px; border-radius: 8px; font-size: 12px; color: #92400e; }
+    .profile { display: flex; align-items: center; gap: 10px; margin-top: 20px; }
+    .profile-icon { background: #e0e7ff; color: #4338ca; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; border-radius: 50%; font-weight: bold; }
+    .name { font-size: 13px; font-weight: 600; }
+    .signout { font-size: 12px; color: grey; margin-top: 20px; cursor: pointer; text-align: center; }
+    .main { flex: 1; margin-left: 260px; padding: 20px; animation: fadeIn 0.8s ease-in-out; }
+    @keyframes fadeIn { from {opacity: 0; transform: translateY(10px);} to {opacity: 1; transform: translateY(0);} }
+    .header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .header-title { font-size: 20px; font-weight: bold; }
+    .nav-header {
+       display: none;
+    }
+
+    .date-picker { padding: 6px 12px; border: 1px solid #ccc; border-radius: 6px; cursor: pointer; font-size: 14px; background: #fff; }
+    .hamburger { display: none; font-size: 20px; cursor: pointer; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
+    .card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card::before { content: ""; position: absolute; top: -40px; right: -40px; width: 160px; height: 160px; border-radius: 50%; opacity: 0.15; }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
+    .card-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #fff; font-size: 18px; margin-bottom: 12px; }
+    .card-title { color: #374151; font-weight: 600; margin-bottom: 5px; }
+    .card strong { font-size: 20px; font-weight: 700; color: #111827; }
+    .card-change { font-size: 12px; display: flex; align-items: center; gap: 4px; }
+    .card-change.up { color: #059669; }
+    .card-change.down { color: #dc2626; }
+    .purple .card-icon { background: #4f46e5; } .purple::before { background: #4f46e5; }
+    .green .card-icon { background: #059669; } .green::before { background: #059669; }
+    .orange .card-icon { background: #d97706; } .orange::before { background: #d97706; }
+    .blue .card-icon { background: #2563eb; } .blue::before { background: #2563eb; }
+    .pink .card-icon { background: #db2777; } .pink::before { background: #db2777; }
+    .teal .card-icon { background: #0d9488; } .teal::before { background: #0d9488; }
+    .charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px; }
+    .chart-box { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+    
+    /* Overlay for mobile sidebar */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      z-index: 5;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+    
+    @media(max-width: 768px) { 
+      .sidebar { left: -260px; } 
+      .sidebar.open { left: 0; } 
+      .main { margin-left: 0; } 
+      .hamburger { 
+        display: block; 
+        margin-left: 10px; 
+      } 
+
+      .nav-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        font-weight: 500;
+        font-size: 20px;
+        margin-top: 15px;
+        margin-bottom: 20px;
+
+      }
+    }
+
+    :root {
+      /* Base palette (tuned to match the screenshot closely) */
+      --bg: #F2EDFF;              /* page background (soft lavender) */
+      --card: #FCFBFF;            /* card background */
+      --card-border: #ECE6FF;     /* subtle card border */
+      --text: #1F2330;            /* primary text */
+      --muted: #7E8695;           /* secondary text */
+      --divider: #EEF0F6;         /* row separators */
+      --amount: #1C2030;          /* amount color */
+
+      /* Icon accents (bg + glyph) */
+      --pledge-bg: #FFF5CC;       --pledge-fg: #E2B100;
+      --offering-bg: #E9FFF2;     --offering-fg: #1D9F58;
+      --missions-bg: #E9F1FF;     --missions-fg: #3E6CE4;
+      --tithe-bg: #EFEAFF;        --tithe-fg: #7B61FF;
+      --building-bg: #FFEADB;     --building-fg: #E6783A;
+
+      --radius-card: 16px;
+      --radius-icon: 12px;
+      --space: clamp(16px, 2.2vw, 24px);
+      --row-gap: 18px;
+      --font: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    .activity-card {
+      width: min(1100px, 100%);
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-card);
+      box-shadow: 0 6px 20px rgba(40, 35, 85, 0.06);
+      padding: calc(var(--space) * 1.2);
+      margin-top: 2rem;
+    }
+
+    .activity-card h2 {
+      margin: 0 0 calc(var(--space) * 0.8) 0;
+      font-size: clamp(18px, 2vw, 20px);
+      line-height: 1.25;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    .activity-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 2px; /* tiny spacing so separators look crisp */
+    }
+
+    .item {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 0; /* vertical rhythm */
+      border-top: 1px solid var(--divider);
+    }
+
+    .item:first-child { border-top: none; }
+
+    /* Left icon cell */
+    .icon-wrap {
+      width: 44px; height: 44px;
+      display: grid; place-items: center;
+      border-radius: var(--radius-icon);
+      border: 1px solid rgba(0,0,0,0.04);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset;
+    }
+    .icon { width: 22px; height: 22px; display: block; }
+
+    /* Middle: name + tag */
+    .who {
+      min-width: 0; /* allow ellipsis */
+    }
+    .name {
+      font-weight: 600;
+      font-size: 15.5px;
+      line-height: 1.35;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .tag {
+      margin-top: 3px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Right: amount + date */
+    .meta { text-align: right; }
+    .amount {
+      font-weight: 700;
+      font-size: 15.5px;
+      color: var(--amount);
+    }
+    .date {
+      margin-top: 6px;
+      font-size: 12.5px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* Accent variants */
+    .pledge  .icon-wrap { background: var(--pledge-bg);  }
+    .pledge  .icon { fill: var(--pledge-fg); }
+
+    .offering .icon-wrap { background: var(--offering-bg); }
+    .offering .icon { fill: var(--offering-fg); }
+
+    .missions .icon-wrap { background: var(--missions-bg); }
+    .missions .icon { fill: var(--missions-fg); }
+
+    .tithe   .icon-wrap { background: var(--tithe-bg); }
+    .tithe   .icon { stroke: var(--tithe-fg); fill: none; stroke-width: 2px; }
+
+    .building .icon-wrap { background: var(--building-bg); }
+    .building .icon { fill: var(--building-fg); }
+
+    /* Responsive tweaks */
+    @media (max-width: 640px) {
+      .card { padding: var(--space); }
+      .item { grid-template-columns: 48px 1fr; align-items: start; }
+      .meta { grid-column: 2 / -1; text-align: left; display: flex; gap: 10px; margin-top: 6px; }
+      .date { order: 2; }
+    }

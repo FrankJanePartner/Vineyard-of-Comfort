@@ -1,0 +1,67 @@
+{% load static %} {% load allauth account %} {% load allauth i18n %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="{% static 'core/css/sign-up.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <section class="form-container">
+        <div class="gcash-img">
+          <img src="{% static 'core/asset/logo.png' %}" alt="" />
+        </div>
+
+        <div class="signup-text">Create your account</div>
+        <form method="post" class="form" action="/accounts/signup/">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+            
+            <!-- Loop through each field in the form -->
+            {% for field in form %}
+                <div>
+                    {% if field.errors %}
+                        <div class="alert alert-danger">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <div class="input-box">
+                <label for="id_username">Fullname:</label>
+                <input type="text" name="username" value="" placeholder="Enter your Fullname" autocomplete="username" minlength="1" maxlength="150" required id="id_username">
+            </div>
+            <div class="input-box">
+                <label for="id_email">Email:</label>
+                <input type="email" name="email" value="" placeholder="Enter Email address" autocomplete="email" maxlength="320" id="id_email">
+            </div>
+            <div class="input-box">
+                <label for="id_password1">Password:</label>
+                <input type="password" name="password1" placeholder="Enter Password" autocomplete="password" required aria-invalid="true" aria-describedby="id_password1_helptext" id="id_password1">            
+            </div>
+            <div class="input-box">
+                <label for="id_password2">Conirm Password:</label>
+                <input type="password" name="password2" placeholder="Re-enter Password" autocomplete="password" required aria-invalid="true" id="id_password2">
+            </div>
+
+          <div class="check-box">
+            <input type="checkbox" name="remember" id="remember" />
+            <label for="remember" class="remember-me">Remember me</label>
+          </div>
+
+          <button type="submit">Sign Up</button>
+
+          <div class="signup-click">
+            Already have an account yet? <a href="/account/login/"> Sign In.</a>
+          </div>
+        </form>
+      </section>
+    </div>
+  </body>
+</html>
