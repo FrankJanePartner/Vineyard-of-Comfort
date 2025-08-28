@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +8,7 @@
  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
- <link rel="stylesheet" href="{% static 'core/css/dashboard.css' %}">
+ <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
 
@@ -28,8 +27,8 @@
         </div>
         <div class="nav-section">
           <div class="nav-title">NAVIGATION</div>
-            <a href="/" class="nav-link active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
-            <a href="/offering/" class="nav-link"><i class="fa-regular fa-file-lines"></i> Financial Report</a>
+            <a href="dashboard.html" class="nav-link active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+            <a href="offering-types.html" class="nav-link"><i class="fa-regular fa-file-lines"></i> Financial Report</a>
         </div>
         <div class="nav-section">
             <div class="nav-title">SPIRITUAL ENCOURAGEMENT</div>
@@ -41,20 +40,15 @@
     </div>
     <div>
         <div class="profile">
-            <div class="profile-icon">{{ user.username|slice:":1" }}</div>
+            <div class="profile-icon">A</div>
             <div>
-                <div class="name">{{ user.username }}</div>
-                {% if user.is_superuser == True %}
-                  <small style="color: gray;">Admin</small>
-                {% else %}
-                  <small style="color: gray;">Staff</small>
-                {% endif %}
+                <div class="name">Ayomide Afolabi</div>
+                <small style="color: gray;">Member</small>
             </div>
         </div>
-        <a href="/accounts/logout/" style="text-decoration: none; width:fit-content;"><div class="signout">Sign Out</div></a>
+        <div class="signout">Sign Out</div>
     </div>
 </div>
-
 
 <!-- Main Content -->
 <div class="main">
@@ -209,105 +203,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-      const hamburger = document.getElementById("hamburger");
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("overlay");
-
-    hamburger.addEventListener("click", () => {
-      sidebar.classList.toggle("open");
-      overlay.classList.toggle("active");
-    });
-
-    // Close sidebar if overlay is clicked
-    overlay.addEventListener("click", () => {
-      sidebar.classList.remove("open");
-      overlay.classList.remove("active");
-    });
-
-    const offeringsData = {
-      "{{ today|date:'Y-m-d' }}": [
-        {% for g in weekly_giving_data %}
-          { 
-              title: "{{ g.title|safe }}", 
-              amount: {{ g.amount }},
-              change: {{ g.change }},
-              {% comment %} color: "{{ g.color }}", {% endcomment %}
-              color: "{{ g.color }}",
-              icon: "{{ g.icon }}"
-          },
-        {% endfor %}
-      ]
-    };
-
-
-
-    const cardsContainer = document.getElementById("cards-container");
-    const datePicker = document.getElementById("datePicker");
-
-    function renderCards(dateKey) {
-        cardsContainer.innerHTML = "";
-        if (!offeringsData[dateKey]) {
-            cardsContainer.innerHTML = "<p>No data for this date.</p>";
-            return;
-        }
-        offeringsData[dateKey].forEach(item => {
-            const changeClass = item.change >= 0 ? "up" : "down";
-            const changeSymbol = item.change >= 0 ? "▲" : "▼";
-            cardsContainer.innerHTML += `
-                <div class="card ${item.color}">
-                    <div class="card-icon"><i class="${item.icon}"></i></div>
-                    <div class="card-title">${item.title}</div>
-                    <strong class="amount">$${item.amount}</strong>
-                    <div class="card-change ${changeClass}">
-                        ${changeSymbol} ${Math.abs(item.change)}% <small>vs last period</small>
-                    </div>
-                </div>
-            `;
-        });
-    }
-
-    const trendCtx = document.getElementById('givingTrend').getContext('2d');
-    const typeCtx = document.getElementById('givingType').getContext('2d');
-    let trendChart = new Chart(trendCtx, {
-        type: 'line',
-        data: { labels: [], datasets: [{ label: 'Giving', data: [], borderColor: '#6366f1', backgroundColor: '#6366f1', fill: false, tension: 0.3 }] },
-        options: { plugins: { legend: { display: false } } }
-    });
-    let typeChart = new Chart(typeCtx, {
-        type: 'pie',
-        data: { labels: [], datasets: [{ data: [], backgroundColor: ['#f97316', '#10b981', '#6366f1'] }] }
-    });
-
-    function updateCharts(dateKey) {
-        if (!offeringsData[dateKey]) return;
-        const amounts = offeringsData[dateKey].map(o => o.amount);
-        trendChart.data.labels = offeringsData[dateKey].map(o => o.title);
-        trendChart.data.datasets[0].data = amounts;
-        trendChart.update();
-
-        typeChart.data.labels = offeringsData[dateKey].map(o => o.title);
-        typeChart.data.datasets[0].data = amounts;
-        typeChart.update();
-    }
-
-    datePicker.addEventListener("change", () => {
-        const selectedDate = datePicker.value;
-        localStorage.setItem("lastDate", selectedDate);
-        renderCards(selectedDate);
-        updateCharts(selectedDate);
-    });
-
-    // Determine last pushed date (latest in offeringsData)
-    const allDates = Object.keys(offeringsData).sort();
-    const latestDate = allDates[allDates.length - 1];
-
-    // Load saved date or latest date if first time
-    const savedDate = localStorage.getItem("lastDate") || latestDate;
-    datePicker.value = savedDate;
-    renderCards(savedDate);
-    updateCharts(savedDate);
-</script>
-
+<script src="dashboard.js"></script>
 </body>
 </html>

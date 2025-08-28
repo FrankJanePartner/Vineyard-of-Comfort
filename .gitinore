@@ -1,0 +1,51 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django migrations (optional, if you don’t want to track them early on)
+*/migrations/*.py
+*/migrations/*.pyc
+# but keep __init__.py
+!*/migrations/__init__.py
+
+# SQLite database
+db.sqlite3
+db.sqlite3-journal
+
+# Media / static files (if generated dynamically)
+media/
+staticfiles/
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# Environment variables
+*.env
+
+# VSCode / PyCharm / IDE settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+
+# Coverage / testing
+.coverage
+htmlcov/
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+
+# Mac / Windows system files
+.DS_Store
+Thumbs.db
+`
+tempFolder/
